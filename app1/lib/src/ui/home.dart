@@ -1,7 +1,8 @@
+import 'package:app1/src/block/bloc_example.dart';
+import 'package:app1/src/models/litacompra_model.dart';
 import 'package:app1/src/ui/lista_compras.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../bloc/bloc_example.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -38,8 +39,8 @@ class _MyHomePageState extends State<MyHomePage> {
             height: size.height * .45,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+                bottomLeft: Radius.circular(70),
+                bottomRight: Radius.circular(70),
               ),
               gradient: LinearGradient(
                 begin: Alignment.topRight,
@@ -98,8 +99,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     SizedBox(height: 15),
                     StreamBuilder(
                       stream: blocEx.stream,
-                      builder: (context, AsyncSnapshot<List<String>> snapshot) {
-                        return buildList(snapshot.data);
+                      builder: (context,
+                          AsyncSnapshot<List<ListaCompraModel>> snapshot) {
+                        return _buildList(blocEx, snapshot.data);
                       },
                     ),
                   ],
@@ -122,16 +124,17 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildList(List<String> data) {
+  Widget _buildList(BlocExample blocEx, List<ListaCompraModel> data) {
     return ListView.builder(
       itemCount: data == null ? 0 : data.length,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
+        ListaCompraModel _item = data[index];
         return ListaCompraItem(
-          containsItens: index % 2 == 0,
-          title: "lista de compras $index",
-          subTitle: "criado por nome $index",
+          item: _item,
+          onClick: (ListaCompraModel m) => {},
+          onRemove: (ListaCompraModel m) => {blocEx.remover(m)},
         );
       },
     );
