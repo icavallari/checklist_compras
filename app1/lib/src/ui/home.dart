@@ -3,6 +3,9 @@ import 'package:app1/src/models/litacompra_model.dart';
 import 'package:app1/src/ui/lista_compras.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+import 'banner_ads.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -28,6 +31,18 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final blocEx = BlocExample();
 
+  //static const _adUnitID = "ca-app-pub-7121901221570106/8155541590";
+
+//test
+  static const _adUnitID = "ca-app-pub-3940256099942544/6300978111";
+
+  final BannerAd myBanner = BannerAd(
+    adUnitId: _adUnitID,
+    size: AdSize.banner,
+    request: AdRequest(),
+    listener: AdListener(),
+  );
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -35,22 +50,21 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            height: size.height * .45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(70),
-                bottomRight: Radius.circular(70),
+          ClipPath(
+            clipper: BezierClipper(),
+            child: Container(
+              height: size.height * .65,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Colors.blue[200],
+                    Colors.blue,
+                  ],
+                ),
+                color: Colors.blue,
               ),
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Colors.blue[200],
-                  Colors.blue,
-                ],
-              ),
-              color: Colors.blue,
             ),
           ),
           SafeArea(
@@ -112,13 +126,14 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       bottomNavigationBar: Container(
-        height: 80,
+        height: 60,
         padding: const EdgeInsets.all(3.0),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.blueAccent, width: 2),
+          color: Colors.transparent,
+          //border: Border.all(color: Colors.blueAccent, width: 2),
         ),
         child: Center(
-          child: Text("espaço para a publicidade"),
+          child: BannerAdWidget(BannerAd.testAdUnitId),
         ),
       ),
     );
@@ -134,9 +149,29 @@ class _MyHomePageState extends State<MyHomePage> {
         return ListaCompraItem(
           item: _item,
           onClick: (ListaCompraModel m) => {},
-          onRemove: (ListaCompraModel m) => {blocEx.remover(m)},
+          onRemove: (ListaCompraModel m) {
+            blocEx.remover(m);
+          },
         );
       },
     );
   }
+}
+
+class BezierClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = new Path();
+    path.lineTo(0, size.height * 0.85); //vertical line
+
+    path.cubicTo(size.width / 3, size.height, 2 * size.width / 3,
+        size.height * 0.4, size.width, size.height * 0.85);
+    //cubic curve
+
+    path.lineTo(size.width, 0); //vertical line
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }

@@ -1,14 +1,42 @@
 import 'package:app1/src/ui/home.dart';
 import 'package:app1/src/ui/splash.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
 
-  runApp(Home());
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+
+  runApp(Produtos());
+}
+
+class Produtos extends StatelessWidget {
+  const Produtos({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: '',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: null,
+          leading: Icon(Icons.close),
+        ),
+        body: Text("data"),
+      ),
+    );
+  }
 }
 
 class Main extends StatelessWidget {
