@@ -1,4 +1,4 @@
-import 'package:app1/src/models/litacompra_model.dart';
+import 'package:app1/src/models/listacompra_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:app1/constants.dart';
@@ -44,12 +44,11 @@ class ListaCompraItem extends StatelessWidget {
         ),
         child: ListTile(
           leading: Icon(
-            item.possuiItens == true
-                ? CupertinoIcons.cart_badge_plus
-                : CupertinoIcons.cart,
+            CupertinoIcons.cart_badge_plus,
+            //  : CupertinoIcons.cart,
           ),
           title: Text(item.nome),
-          subtitle: Text("datacriação"),
+          subtitle: Text(item.dataCriacao),
           trailing: Icon(
             CupertinoIcons.chevron_compact_right,
             size: 22,

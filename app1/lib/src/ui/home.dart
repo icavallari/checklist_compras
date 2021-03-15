@@ -1,11 +1,13 @@
-import 'package:app1/src/block/bloc_example.dart';
-import 'package:app1/src/models/litacompra_model.dart';
+import 'package:app1/constants.dart';
+import 'package:app1/src/block/bloc_listas.dart';
+import 'package:app1/src/models/listacompra_model.dart';
+import 'package:app1/src/ui/comp_headerpath.dart';
+import 'package:app1/src/ui/comp_alert.dart';
 import 'package:app1/src/ui/lista_compras.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-import 'banner_ads.dart';
+import 'comp_bannerads.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -16,56 +18,35 @@ class Home extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      home: HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  final String title = "Flutter Demo Home Page";
-
+class HomePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  final blocEx = BlocExample();
-
-  //static const _adUnitID = "ca-app-pub-7121901221570106/8155541590";
-
-//test
-  static const _adUnitID = "ca-app-pub-3940256099942544/6300978111";
-
-  final BannerAd myBanner = BannerAd(
-    adUnitId: _adUnitID,
-    size: AdSize.banner,
-    request: AdRequest(),
-    listener: AdListener(),
-  );
+class _HomePageState extends State<HomePage> {
+  final blocListas = BlocListas();
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var alert = Alert(
+      context: context,
+      okClick: (String titulo) {
+        blocListas.adicionar(titulo);
+        Navigator.of(context).pop();
+      },
+    );
 
     return Scaffold(
       body: Stack(
         children: [
-          ClipPath(
-            clipper: BezierClipper(),
-            child: Container(
-              height: size.height * .65,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Colors.blue[200],
-                    Colors.blue,
-                  ],
-                ),
-                color: Colors.blue,
-              ),
-            ),
+          HeaderPath(
+            colors1: Colors.blue[200],
+            colors2: Colors.blue,
           ),
           SafeArea(
             child: SingleChildScrollView(
@@ -100,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             CupertinoIcons.add,
                           ),
                           onPressed: () {
-                            blocEx.adicionar();
+                            alert.show();
                           },
                           label: Text("Nova Lista"),
                           color: Colors.white,
@@ -112,10 +93,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     SizedBox(height: 15),
                     StreamBuilder(
-                      stream: blocEx.stream,
+                      stream: blocListas.stream,
                       builder: (context,
                           AsyncSnapshot<List<ListaCompraModel>> snapshot) {
-                        return _buildList(blocEx, snapshot.data);
+                        return _buildList(blocListas, snapshot.data);
                       },
                     ),
                   ],
@@ -130,16 +111,15 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(3.0),
         decoration: BoxDecoration(
           color: Colors.transparent,
-          //border: Border.all(color: Colors.blueAccent, width: 2),
         ),
         child: Center(
-          child: BannerAdWidget(BannerAd.testAdUnitId),
+          child: BannerAdWidget(BAN_UNIT_ID),
         ),
       ),
     );
   }
 
-  Widget _buildList(BlocExample blocEx, List<ListaCompraModel> data) {
+  Widget _buildList(BlocListas blocEx, List<ListaCompraModel> data) {
     return ListView.builder(
       itemCount: data == null ? 0 : data.length,
       shrinkWrap: true,
@@ -156,22 +136,4 @@ class _MyHomePageState extends State<MyHomePage> {
       },
     );
   }
-}
-
-class BezierClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = new Path();
-    path.lineTo(0, size.height * 0.85); //vertical line
-
-    path.cubicTo(size.width / 3, size.height, 2 * size.width / 3,
-        size.height * 0.4, size.width, size.height * 0.85);
-    //cubic curve
-
-    path.lineTo(size.width, 0); //vertical line
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }
