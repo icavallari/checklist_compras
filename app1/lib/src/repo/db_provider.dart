@@ -8,13 +8,15 @@ class DBProvider {
   static const String T_LISTA_COMPRA = "lista_compra";
   static const String T_ITEM_COMPRA = "item_compra";
 
-  static Database _db;
+  DBProvider._();
+  static final DBProvider instance = DBProvider._();
+  Database _database;
 
   Future<Database> get db async {
-    if (_db != null) return _db;
+    if (_database != null) return _database;
 
-    _db = await _initDb();
-    return _db;
+    _database = await _initDb();
+    return _database;
   }
 
   Future<Database> _initDb() async {

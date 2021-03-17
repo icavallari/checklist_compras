@@ -15,7 +15,7 @@ class ListaCompraModel {
     this.dataCriacao,
   }) {
     if (dataCriacao == null) {
-      dataCriacao = DateFormat('dd/MM/yy – kk:mm').format(DateTime.now());
+      dataCriacao = DateFormat('dd/MM/yy kk:mm').format(DateTime.now());
     }
   }
 
@@ -32,8 +32,8 @@ class ListaCompraModel {
   ListaCompraModel.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     nome = map['nome'];
-    deletado = map['deletado'];
     qtdItens = map['qtditens'];
+    deletado = map['deletado'] == 0;
     dataCriacao = map['datacriacao'];
   }
 }

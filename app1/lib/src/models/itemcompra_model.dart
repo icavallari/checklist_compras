@@ -39,8 +39,8 @@ class ItemCompraModel {
     nome = map['nome'];
     ordem = map['ordem'];
     valor = map['valor'];
-    deletado = map['deletado'];
-    noCarinho = map['nocarinho'];
+    deletado = map['deletado'] == 0;
+    noCarinho = map['nocarinho'] == 0;
     listaCompraId = map['listacompra_id'];
   }
 }

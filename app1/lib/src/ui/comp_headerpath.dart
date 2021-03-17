@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HeaderPath extends StatelessWidget {
-  final MaterialColor colors1 = null;
-  final MaterialColor colors2 = null;
+  final Color colors1;
+  final Color colors2;
 
-  HeaderPath({
+  const HeaderPath({
     Key key,
-    @required MaterialColor colors1,
-    @required MaterialColor colors2,
+    this.colors1,
+    this.colors2,
   }) : super(key: key);
 
   @override

@@ -12,7 +12,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
 
-  runApp(Home());
+  runApp(Main());
 }
 
 class Main extends StatelessWidget {

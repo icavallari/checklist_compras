@@ -8,11 +8,11 @@ class Repository {
   static const String TABELA_ITEM = DBProvider.T_ITEM_COMPRA;
 
   Future<List<ListaCompraModel>> getListas() async {
-    var dbClient = await DBProvider().db;
+    var dbClient = await DBProvider.instance.db;
     List<Map> maps = await dbClient.rawQuery("""
       SELECT li.*,
       ( SELECT COUNT(*) AS qtditens FROM $TABELA_ITEM it WHERE it.listacompra_id = li.id ) 
-      FROM $TABELA_LISTA li WHERE li.deletado = false
+      FROM $TABELA_LISTA li WHERE li.deletado == 0
       ORDER BY ID DESC
     """);
     //
@@ -26,7 +26,7 @@ class Repository {
   }
 
   Future<ListaCompraModel> salvarLista(ListaCompraModel lista) async {
-    var db = await DBProvider().db;
+    var db = await DBProvider.instance.db;
     lista.id = await db.insert(
       TABELA_LISTA,
       lista.toMap(),
@@ -36,16 +36,16 @@ class Repository {
   }
 
   Future<int> atualizarLista(ListaCompraModel lista) async {
-    var dbClient = await DBProvider().db;
+    var dbClient = await DBProvider.instance.db;
     return await dbClient.update(DBProvider.T_LISTA_COMPRA, lista.toMap(),
         where: 'id = ?', whereArgs: [lista.id]);
   }
 
   Future<List<ItemCompraModel>> getItens(int listaId) async {
-    var dbClient = await DBProvider().db;
+    var dbClient = await DBProvider.instance.db;
     List<Map> maps = await dbClient.rawQuery("""
       SELECT * FROM $TABELA_ITEM 
-      WHERE deletado = false AND id = $listaId
+      WHERE deletado != 0 AND id = $listaId
       ORDER BY ID DESC
     """);
     //
@@ -59,7 +59,7 @@ class Repository {
   }
 
   Future<ItemCompraModel> salvarItem(ItemCompraModel item) async {
-    var db = await DBProvider().db;
+    var db = await DBProvider.instance.db;
     item.id = await db.insert(
       TABELA_ITEM,
       item.toMap(),
@@ -69,7 +69,7 @@ class Repository {
   }
 
   Future<int> atualizarItem(ItemCompraModel item) async {
-    var dbClient = await DBProvider().db;
+    var dbClient = await DBProvider.instance.db;
     return await dbClient.update(TABELA_ITEM, item.toMap(),
         where: 'id = ?', whereArgs: [item.id]);
   }

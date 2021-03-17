@@ -33,14 +33,7 @@ class ListaCompraItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 17),
-              blurRadius: 17,
-              spreadRadius: -23,
-              color: kShadowColor,
-            ),
-          ],
+          border: Border.all(color: Colors.black26),
         ),
         child: ListTile(
           leading: Icon(
@@ -48,7 +41,7 @@ class ListaCompraItem extends StatelessWidget {
             //  : CupertinoIcons.cart,
           ),
           title: Text(item.nome),
-          subtitle: Text(item.dataCriacao),
+          subtitle: Text(item.dataCriacao + "h"),
           trailing: Icon(
             CupertinoIcons.chevron_compact_right,
             size: 22,
