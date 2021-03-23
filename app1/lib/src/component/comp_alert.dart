@@ -27,7 +27,7 @@ class Alert {
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: "Título",
+                    labelText: "Nome",
                   ),
                 ),
               ],

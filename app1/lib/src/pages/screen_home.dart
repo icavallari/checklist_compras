@@ -1,13 +1,13 @@
 import 'package:app1/constants.dart';
-import 'package:app1/src/block/bloc_listas.dart';
+import 'package:app1/src/block/service_listas.dart';
 import 'package:app1/src/models/listacompra_model.dart';
-import 'package:app1/src/ui/comp_headerpath.dart';
-import 'package:app1/src/ui/comp_alert.dart';
-import 'package:app1/src/ui/lista_compras.dart';
+import 'package:app1/src/component/comp_headerpath.dart';
+import 'package:app1/src/component/comp_alert.dart';
+import 'package:app1/src/component/comp_lista_compras.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'comp_bannerads.dart';
+import '../component/comp_bannerads.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -29,18 +29,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final blocListas = BlocListas();
+  final blocListas = ListaService();
+  Alert alert;
 
   @override
-  Widget build(BuildContext context) {
-    var alert = Alert(
+  void initState() {
+    super.initState();
+    blocListas.loadListas();
+
+    alert = Alert(
       context: context,
       okClick: (String titulo) {
         blocListas.adicionar(titulo);
         Navigator.of(context).pop();
       },
     );
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
@@ -62,12 +69,12 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Icon(
-                              CupertinoIcons.doc_on_doc,
+                              Icons.add_shopping_cart,
                               color: Colors.white,
                             ),
                             SizedBox(width: 10),
                             Text(
-                              "Listas",
+                              "Checklist - Compras",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -83,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                           onPressed: () {
                             alert.show();
                           },
-                          label: Text("Nova Lista"),
+                          label: Text("Lista"),
                           color: Colors.white,
                           textColor: Colors.blue,
                           shape: RoundedRectangleBorder(
@@ -119,16 +126,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildList(BlocListas blocEx, List<ListaCompraModel> data) {
+  Widget _buildList(ListaService blocEx, List<ListaCompraModel> data) {
     return ListView.builder(
       itemCount: data == null ? 0 : data.length,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        ListaCompraModel _item = data[index];
         return ListaCompraItem(
-          item: _item,
-          onClick: (ListaCompraModel m) => {},
+          item: data[index],
           onRemove: (ListaCompraModel m) {
             blocEx.remover(m);
           },

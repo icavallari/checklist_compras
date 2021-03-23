@@ -1,5 +1,5 @@
-import 'package:app1/src/models/itemcompra_model.dart';
-import 'package:app1/src/models/listacompra_model.dart';
+import 'package:app1/src/models/item.dart';
+import 'package:app1/src/models/lista.dart';
 import 'package:app1/src/repo/db_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -7,7 +7,16 @@ class Repository {
   static const String TABELA_LISTA = DBProvider.T_LISTA_COMPRA;
   static const String TABELA_ITEM = DBProvider.T_ITEM_COMPRA;
 
-  Future<List<ListaCompraModel>> getListas() async {
+  Future<Lista> getLista(int id) async {
+    var dbClient = await DBProvider.instance.db;
+    List<Map> maps = await dbClient.rawQuery("""
+      SELECT * FROM $TABELA_LISTA WHERE id = ?
+    """, [id]);
+    //
+    return Lista.fromMap(maps[0]);
+  }
+
+  Future<List<Lista>> getListas() async {
     var dbClient = await DBProvider.instance.db;
     List<Map> maps = await dbClient.rawQuery("""
       SELECT li.*,
@@ -16,16 +25,16 @@ class Repository {
       ORDER BY ID DESC
     """);
     //
-    List<ListaCompraModel> listas = [];
+    List<Lista> listas = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        listas.add(ListaCompraModel.fromMap(maps[i]));
+        listas.add(Lista.fromMap(maps[i]));
       }
     }
     return listas;
   }
 
-  Future<ListaCompraModel> salvarLista(ListaCompraModel lista) async {
+  Future<Lista> salvarLista(Lista lista) async {
     var db = await DBProvider.instance.db;
     lista.id = await db.insert(
       TABELA_LISTA,
@@ -35,30 +44,30 @@ class Repository {
     return lista;
   }
 
-  Future<int> atualizarLista(ListaCompraModel lista) async {
+  Future<int> atualizarLista(Lista lista) async {
     var dbClient = await DBProvider.instance.db;
     return await dbClient.update(DBProvider.T_LISTA_COMPRA, lista.toMap(),
         where: 'id = ?', whereArgs: [lista.id]);
   }
 
-  Future<List<ItemCompraModel>> getItens(int listaId) async {
+  Future<List<Item>> getItens(int listaId) async {
     var dbClient = await DBProvider.instance.db;
     List<Map> maps = await dbClient.rawQuery("""
       SELECT * FROM $TABELA_ITEM 
-      WHERE deletado != 0 AND id = $listaId
+      WHERE deletado == 0 AND listacompra_id = ?
       ORDER BY ID DESC
-    """);
+    """, [listaId]);
     //
-    List<ItemCompraModel> itens = [];
+    List<Item> itens = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        itens.add(ItemCompraModel.fromMap(maps[i]));
+        itens.add(Item.fromMap(maps[i]));
       }
     }
     return itens;
   }
 
-  Future<ItemCompraModel> salvarItem(ItemCompraModel item) async {
+  Future<Item> salvarItem(Item item) async {
     var db = await DBProvider.instance.db;
     item.id = await db.insert(
       TABELA_ITEM,
@@ -68,7 +77,7 @@ class Repository {
     return item;
   }
 
-  Future<int> atualizarItem(ItemCompraModel item) async {
+  Future<int> atualizarItem(Item item) async {
     var dbClient = await DBProvider.instance.db;
     return await dbClient.update(TABELA_ITEM, item.toMap(),
         where: 'id = ?', whereArgs: [item.id]);

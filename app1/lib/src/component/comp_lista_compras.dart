@@ -1,17 +1,15 @@
 import 'package:app1/src/models/listacompra_model.dart';
+import 'package:app1/src/screen/screen_produtos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:app1/constants.dart';
 
 class ListaCompraItem extends StatelessWidget {
-  final Function onClick;
   final Function onRemove;
   final ListaCompraModel item;
 
   const ListaCompraItem({
     Key key,
     this.item,
-    this.onClick,
     this.onRemove,
   }) : super(key: key);
 
@@ -26,25 +24,33 @@ class ListaCompraItem extends StatelessWidget {
       onDismissed: (direction) {
         onRemove(this.item);
       },
-      child: Container(
-        margin: EdgeInsets.only(
-          bottom: 7,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.black26),
-        ),
-        child: ListTile(
-          leading: Icon(
-            CupertinoIcons.cart_badge_plus,
-            //  : CupertinoIcons.cart,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Produtos(listaId: item.id)),
+          );
+        },
+        child: Container(
+          margin: EdgeInsets.only(
+            bottom: 7,
           ),
-          title: Text(item.nome),
-          subtitle: Text(item.dataCriacao + "h"),
-          trailing: Icon(
-            CupertinoIcons.chevron_compact_right,
-            size: 22,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.black26),
+          ),
+          child: ListTile(
+            leading: Icon(
+              CupertinoIcons.cart_badge_plus,
+              //  : CupertinoIcons.cart,
+            ),
+            title: Text(item.nome),
+            subtitle: Text(item.dataCriacao + "h"),
+            trailing: Icon(
+              CupertinoIcons.chevron_compact_right,
+              size: 22,
+            ),
           ),
         ),
       ),

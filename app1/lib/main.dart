@@ -1,5 +1,5 @@
-import 'package:app1/src/ui/home.dart';
-import 'package:app1/src/ui/splash.dart';
+import 'package:app1/src/pages/screen_home.dart';
+import 'package:app1/src/pages/screen_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -21,13 +21,10 @@ class Main extends StatelessWidget {
     return FutureBuilder(
       future: Future.delayed(Duration(seconds: 2)),
       builder: (context, AsyncSnapshot snapshot) {
-        // Show splash screen while waiting for app resources to load:
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Splash();
-        } else {
-          // Loading is done, return the app:
-          return Home();
         }
+        return Home();
       },
     );
   }

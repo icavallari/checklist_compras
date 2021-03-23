@@ -4,19 +4,22 @@ import 'package:app1/src/models/listacompra_model.dart';
 import 'package:app1/src/repo/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class BlocListas {
+class ListaService {
   final repo = Repository();
 
+  final _ctrlTitulo = PublishSubject<String>();
   final _ctrl = PublishSubject<List<ListaCompraModel>>();
 
+  Stream<String> get streamTitulo => _ctrlTitulo.stream;
   Stream<List<ListaCompraModel>> get stream => _ctrl.stream;
 
-  BlocListas() {
-    load();
+  loadListas() async {
+    _ctrl.sink.add(await repo.getListas());
   }
 
-  load() async {
-    _ctrl.sink.add(await repo.getListas());
+  loadTitulo(int id) async {
+    ListaCompraModel model = await repo.getLista(id);
+    _ctrlTitulo.sink.add(model.nome);
   }
 
   void adicionar(String titulo) {
@@ -25,16 +28,17 @@ class BlocListas {
         nome: titulo,
       ),
     );
-    load();
+    loadListas();
   }
 
   void remover(ListaCompraModel item) {
     item.deletado = true;
     repo.atualizarLista(item);
-    load();
+    loadListas();
   }
 
   fecharStream() {
     _ctrl.close();
+    _ctrlTitulo.close();
   }
 }

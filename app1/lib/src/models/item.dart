@@ -1,4 +1,4 @@
-class ItemCompraModel {
+class Item {
   int id;
   int qtd;
   int ordem;
@@ -8,7 +8,7 @@ class ItemCompraModel {
   bool noCarinho;
   int listaCompraId;
 
-  ItemCompraModel({
+  Item({
     this.id,
     this.qtd,
     this.nome,
@@ -26,21 +26,21 @@ class ItemCompraModel {
       "ordem": ordem,
       "valor": valor,
       "deletado": deletado,
-      "nocarinho": noCarinho,
+      "nocarrinho": noCarinho,
       "listacompra_id": listaCompraId
     };
     if (id != null) map['id'] = id;
     return map;
   }
 
-  ItemCompraModel.fromMap(Map<String, dynamic> map) {
+  Item.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     qtd = map['qtd'];
     nome = map['nome'];
     ordem = map['ordem'];
     valor = map['valor'];
-    deletado = map['deletado'] == 0;
-    noCarinho = map['nocarinho'] == 0;
+    deletado = map['deletado'] != 0;
+    noCarinho = map['nocarrinho'] != 0;
     listaCompraId = map['listacompra_id'];
   }
 }

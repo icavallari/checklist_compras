@@ -1,13 +1,13 @@
 import 'package:intl/intl.dart';
 
-class ListaCompraModel {
+class Lista {
   int id;
   String nome;
   int qtdItens;
   bool deletado;
   String dataCriacao;
 
-  ListaCompraModel({
+  Lista({
     this.id,
     this.nome,
     this.deletado = false,
@@ -29,11 +29,11 @@ class ListaCompraModel {
     return map;
   }
 
-  ListaCompraModel.fromMap(Map<String, dynamic> map) {
+  Lista.fromMap(Map<String, dynamic> map) {
     id = map['id'];
     nome = map['nome'];
     qtdItens = map['qtditens'];
-    deletado = map['deletado'] == 0;
+    deletado = map['deletado'] != 0;
     dataCriacao = map['datacriacao'];
   }
 }
