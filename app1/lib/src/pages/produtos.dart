@@ -1,26 +1,28 @@
-import 'package:app1/src/block/service_listas.dart';
-import 'package:app1/src/block/service_produtos.dart';
-import 'package:app1/src/component/comp_alert.dart';
-import 'package:app1/src/component/comp_headerpath.dart';
-import 'package:app1/src/component/comp_produto.dart';
-import 'package:app1/src/models/itemcompra_model.dart';
+import 'package:app1/src/widget/headerpath.dart';
+import 'package:app1/src/widget/produto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Produtos extends StatefulWidget {
+import '../models/item.dart';
+import '../service/service_listas.dart';
+import '../service/service_produtos.dart';
+import '../widget/produto.dart';
+import '../widget/alert_produto.dart';
+
+class ProdutoScreen extends StatefulWidget {
   final int listaId;
 
-  Produtos({Key key, this.listaId}) : super(key: key);
+  ProdutoScreen({Key key, this.listaId}) : super(key: key);
 
   @override
-  _ProdutosState createState() => _ProdutosState(listaId);
+  _ProdutoScreenState createState() => _ProdutoScreenState(listaId);
 }
 
-class _ProdutosState extends State<Produtos> {
+class _ProdutoScreenState extends State<ProdutoScreen> {
   final int listaId;
-  _ProdutosState(this.listaId);
+  _ProdutoScreenState(this.listaId);
 
-  Alert _alert;
+  AlertProdutoWidget _alert;
   ProdutoService _service;
   ListaService _listaService;
 
@@ -32,7 +34,7 @@ class _ProdutosState extends State<Produtos> {
     _listaService.loadTitulo(listaId);
     _service = ProdutoService(listaId);
 
-    _alert = Alert(
+    _alert = AlertProdutoWidget(
       context: context,
       okClick: (String titulo) {
         _service.adicionar(
@@ -48,7 +50,7 @@ class _ProdutosState extends State<Produtos> {
     return Scaffold(
       body: Stack(
         children: [
-          HeaderPath(
+          HeaderPathWidget(
             colors1: Colors.green[200],
             colors2: Colors.green,
           ),
@@ -109,8 +111,7 @@ class _ProdutosState extends State<Produtos> {
                     SizedBox(height: 15),
                     StreamBuilder(
                       stream: _service.stream,
-                      builder: (context,
-                          AsyncSnapshot<List<ItemCompraModel>> snapshot) {
+                      builder: (context, AsyncSnapshot<List<Item>> snapshot) {
                         return _buildList(_service, snapshot.data);
                       },
                     ),
@@ -126,16 +127,16 @@ class _ProdutosState extends State<Produtos> {
     );
   }
 
-  Widget _buildList(ProdutoService service, List<ItemCompraModel> itens) {
+  Widget _buildList(ProdutoService service, List<Item> itens) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       itemCount: itens == null ? 0 : itens.length,
       itemBuilder: (context, index) {
-        return ProdutoItem(
+        return ProdutoWidget(
           key: Key("$index"),
           item: itens[index],
-          onRemove: (ItemCompraModel m) {
+          onRemove: (Item m) {
             service.remover(m);
           },
         );

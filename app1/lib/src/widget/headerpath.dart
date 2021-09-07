@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HeaderPath extends StatelessWidget {
+class HeaderPathWidget extends StatelessWidget {
   final Color colors1;
   final Color colors2;
 
-  const HeaderPath({
+  const HeaderPathWidget({
     Key key,
     this.colors1,
     this.colors2,

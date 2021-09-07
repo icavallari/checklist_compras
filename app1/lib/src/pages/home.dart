@@ -1,15 +1,15 @@
 import 'package:app1/constants.dart';
-import 'package:app1/src/block/service_listas.dart';
-import 'package:app1/src/models/listacompra_model.dart';
-import 'package:app1/src/component/comp_headerpath.dart';
-import 'package:app1/src/component/comp_alert.dart';
-import 'package:app1/src/component/comp_lista_compras.dart';
+import 'package:app1/src/widget/headerpath.dart';
+import 'package:app1/src/widget/alert_lista.dart';
+import 'package:app1/src/widget/lista.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../component/comp_bannerads.dart';
+import '../widget/bannerads.dart';
+import '../models/lista.dart';
+import '../service/service_listas.dart';
 
-class Home extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,14 +30,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final blocListas = ListaService();
-  Alert alert;
+  AlertListaWidget alert;
 
   @override
   void initState() {
     super.initState();
     blocListas.loadListas();
 
-    alert = Alert(
+    alert = AlertListaWidget(
       context: context,
       okClick: (String titulo) {
         blocListas.adicionar(titulo);
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          HeaderPath(
+          HeaderPathWidget(
             colors1: Colors.blue[200],
             colors2: Colors.blue,
           ),
@@ -101,8 +101,7 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(height: 15),
                     StreamBuilder(
                       stream: blocListas.stream,
-                      builder: (context,
-                          AsyncSnapshot<List<ListaCompraModel>> snapshot) {
+                      builder: (context, AsyncSnapshot<List<Lista>> snapshot) {
                         return _buildList(blocListas, snapshot.data);
                       },
                     ),
@@ -126,15 +125,15 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildList(ListaService blocEx, List<ListaCompraModel> data) {
+  Widget _buildList(ListaService blocEx, List<Lista> data) {
     return ListView.builder(
       itemCount: data == null ? 0 : data.length,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        return ListaCompraItem(
+        return ListaWidget(
           item: data[index],
-          onRemove: (ListaCompraModel m) {
+          onRemove: (Lista m) {
             blocEx.remover(m);
           },
         );

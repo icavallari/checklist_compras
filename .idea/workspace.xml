@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2d5d753a-4ead-4a17-9976-6c22c4a2f7a5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app1/android/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app1/android/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app1/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/lib/src/component/comp_alert.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/lib/src/component/comp_bannerads.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/lib/src/component/comp_headerpath.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/lib/src/component/comp_lista_compras.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/lib/src/component/comp_produto.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/lib/src/pages/screen_home.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/lib/src/pages/screen_produtos.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/lib/src/pages/screen_splash.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/lib/src/service/service_listas.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app1/lib/src/service/service_listas.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/lib/src/service/service_produtos.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app1/lib/src/service/service_produtos.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app1/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app1/test/widget_test.dart" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1x3J98wHOohnrD75bXACjLyxCZm" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2d5d753a-4ead-4a17-9976-6c22c4a2f7a5" name="Default Changelist" comment="" />
+      <created>1629577684531</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1629577684531</updated>
+    </task>
+    <servers />
+  </component>
+</project>

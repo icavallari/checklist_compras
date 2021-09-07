@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Alert {
+class AlertProdutoWidget {
   Function okClick;
   BuildContext context;
 
-  Alert({
+  AlertProdutoWidget({
     this.okClick,
     this.context,
   });
@@ -17,7 +17,7 @@ class Alert {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Nova Lista'),
+          title: Text('Novo Produto'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[

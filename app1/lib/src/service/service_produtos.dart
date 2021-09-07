@@ -1,16 +1,17 @@
 import 'dart:async';
 
-import 'package:app1/src/models/itemcompra_model.dart';
 import 'package:app1/src/repo/repository.dart';
 import 'package:rxdart/rxdart.dart';
+
+import '../models/item.dart';
 
 class ProdutoService {
   final int listaId;
   int _lastOrdem = 0;
   final repo = Repository();
-  final _ctrl = PublishSubject<List<ItemCompraModel>>();
+  final _ctrl = PublishSubject<List<Item>>();
 
-  Stream<List<ItemCompraModel>> get stream => _ctrl.stream;
+  Stream<List<Item>> get stream => _ctrl.stream;
 
   ProdutoService(this.listaId) {
     load();
@@ -22,7 +23,7 @@ class ProdutoService {
 
   void adicionar(String nome) {
     repo.salvarItem(
-      ItemCompraModel(
+      Item(
         listaCompraId: listaId,
         ordem: _lastOrdem,
         nome: nome,
@@ -31,7 +32,7 @@ class ProdutoService {
     load();
   }
 
-  void remover(ItemCompraModel item) {
+  void remover(Item item) {
     item.deletado = true;
     repo.atualizarItem(item);
     load();

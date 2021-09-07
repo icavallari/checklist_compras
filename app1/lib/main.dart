@@ -1,5 +1,5 @@
-import 'package:app1/src/pages/screen_home.dart';
-import 'package:app1/src/pages/screen_splash.dart';
+import 'package:app1/src/pages/home.dart';
+import 'package:app1/src/pages/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -22,9 +22,9 @@ class Main extends StatelessWidget {
       future: Future.delayed(Duration(seconds: 2)),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Splash();
+          return SplashScreen();
         }
-        return Home();
+        return HomeScreen();
       },
     );
   }

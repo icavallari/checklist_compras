@@ -1,13 +1,14 @@
-import 'package:app1/src/models/listacompra_model.dart';
-import 'package:app1/src/screen/screen_produtos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class ListaCompraItem extends StatelessWidget {
-  final Function onRemove;
-  final ListaCompraModel item;
+import '../models/lista.dart';
+import '../pages/produtos.dart';
 
-  const ListaCompraItem({
+class ListaWidget extends StatelessWidget {
+  final Function onRemove;
+  final Lista item;
+
+  const ListaWidget({
     Key key,
     this.item,
     this.onRemove,
@@ -28,7 +29,8 @@ class ListaCompraItem extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Produtos(listaId: item.id)),
+            MaterialPageRoute(
+                builder: (context) => ProdutoScreen(listaId: item.id)),
           );
         },
         child: Container(

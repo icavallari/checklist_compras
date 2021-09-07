@@ -1,13 +1,14 @@
-import 'package:app1/src/models/itemcompra_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class ProdutoItem extends StatelessWidget {
+import '../models/item.dart';
+
+class ProdutoWidget extends StatelessWidget {
   final Function onClick;
   final Function onRemove;
-  final ItemCompraModel item;
+  final Item item;
 
-  const ProdutoItem({
+  const ProdutoWidget({
     Key key,
     this.item,
     this.onClick,
